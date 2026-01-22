@@ -21,11 +21,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/_not-found/page.js"
     ],
-    "/success-story/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/success-story/page.js"
-    ],
     "/account/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -36,40 +31,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/account/layout.js"
     ],
-    "/account/profile/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/account/profile/page.js"
-    ],
     "/account/orders/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/account/orders/page.js"
     ],
-    "/account/wishlist/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/account/wishlist/page.js"
-    ],
-    "/account/affiliate/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/account/affiliate/page.js"
-    ],
-    "/account/change-password/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/account/change-password/page.js"
-    ],
-    "/account/orders/details/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/account/orders/details/page.js"
-    ],
     "/product/details/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/product/details/page.js"
+    ],
+    "/account/wishlist/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/account/wishlist/page.js"
     ]
   }
 }
