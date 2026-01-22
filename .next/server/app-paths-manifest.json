@@ -1,4 +1,17 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/page": "app/page.js"
+  "/about-us/page": "app/about-us/page.js",
+  "/bath-powder-story/page": "app/bath-powder-story/page.js",
+  "/page": "app/page.js",
+  "/success-story/page": "app/success-story/page.js",
+  "/product/details/page": "app/product/details/page.js",
+  "/products/page": "app/products/page.js",
+  "/wishlist/page": "app/wishlist/page.js",
+  "/account/change-password/page": "app/account/change-password/page.js",
+  "/account/orders/details/page": "app/account/orders/details/page.js",
+  "/account/affiliate/page": "app/account/affiliate/page.js",
+  "/account/page": "app/account/page.js",
+  "/account/orders/page": "app/account/orders/page.js",
+  "/account/wishlist/page": "app/account/wishlist/page.js",
+  "/account/profile/page": "app/account/profile/page.js"
 }

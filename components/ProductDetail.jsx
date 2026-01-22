@@ -41,10 +41,17 @@ export default function ProductDetail({ product, onBack }) {
 
   const images = useMemo(() => {
     if (selectedVariation?.images?.length) {
-      return selectedVariation.images;
+      return selectedVariation.images.map((img) => img.image_url);
     }
-    return product.images;
+
+    return product.images?.map((img) => img.image_url) || [];
   }, [selectedVariation, product.images]);
+
+  useEffect(() => {
+    if (!images.length && product.image) {
+      setSelectedImage(0);
+    }
+  }, [images, product.image]);
 
   /* ================= ACTIONS ================= */
 
@@ -103,7 +110,9 @@ export default function ProductDetail({ product, onBack }) {
         <div className="space-y-4">
           <div className="aspect-square bg-gray-100 rounded-xl overflow-hidden">
             <img
-              src={images[selectedImage]}
+              src={
+                images[selectedImage] || product.image || "/placeholder.webp"
+              }
               alt={product.name}
               className="w-full h-full object-cover"
             />

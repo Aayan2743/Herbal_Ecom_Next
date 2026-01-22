@@ -14,8 +14,12 @@ export default function OrdersPage() {
   }, []);
 
   const fetchOrders = async () => {
-    const res = await api.get("/cart/get-my-orders");
-    setOrders(res.data.data || []);
+    try {
+      const res = await api.get("/cart/get-my-orders");
+      setOrders(res.data.data || []);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const tabs = ["All", "Processing", "Delivered"];
@@ -26,10 +30,10 @@ export default function OrdersPage() {
       : orders.filter((o) => o.order_status === activeTab.toLowerCase());
 
   return (
-    <div>
+    <div className="p-6">
       <h2 className="text-xl font-semibold mb-6">My Orders</h2>
 
-      {/* Tabs */}
+      {/* TABS (OLD DESIGN) */}
       <div className="flex gap-3 mb-6">
         {tabs.map((tab) => (
           <button
@@ -44,7 +48,7 @@ export default function OrdersPage() {
         ))}
       </div>
 
-      {/* Orders */}
+      {/* ORDER CARDS (OLD DESIGN) */}
       <div className="space-y-4">
         {filteredOrders.map((order) => {
           const firstItem = order.items?.[0];
@@ -56,12 +60,14 @@ export default function OrdersPage() {
               key={order.id}
               className="bg-white rounded-xl shadow p-4 flex gap-4 items-center"
             >
+              {/* PRODUCT IMAGE */}
               <img
                 src={image}
                 alt=""
                 className="w-20 h-20 rounded object-cover"
               />
 
+              {/* DETAILS */}
               <div className="flex-1">
                 <p className="text-sm text-indigo-600">Order #{order.id}</p>
                 <p className="font-medium text-sm">
@@ -72,10 +78,13 @@ export default function OrdersPage() {
                 </p>
               </div>
 
+              {/* PRICE + VIEW */}
               <div className="text-right">
                 <p className="font-semibold">₹{order.total_amount}</p>
                 <button
-                  onClick={() => router.push(`/account/orders/${order.id}`)}
+                  onClick={() =>
+                    router.push(`/account/orders/details?id=${order.id}`)
+                  }
                   className="text-sm text-indigo-600 hover:underline"
                 >
                   View
@@ -84,6 +93,10 @@ export default function OrdersPage() {
             </div>
           );
         })}
+
+        {filteredOrders.length === 0 && (
+          <p className="text-sm text-gray-500">No orders found</p>
+        )}
       </div>
     </div>
   );

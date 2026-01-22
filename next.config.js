@@ -6,7 +6,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true, // ✅ Skip TS errors if any
   },
-  // output: "export", // ✅ Enables static export (creates /out)
+  output: "export", // ✅ Enables static export (creates /out)
   images: {
     unoptimized: true, // ✅ Prevents image optimization error on static hosting
   },

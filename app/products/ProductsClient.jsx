@@ -1,5 +1,3 @@
-// products/ProductsClients
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -9,10 +7,6 @@ import api from "@/lib/api";
 export default function ProductsClient({ categorySlug, filters }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   console.log("aaaaaaaaa", categorySlug);
-  // }, [categorySlug]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -24,9 +18,8 @@ export default function ProductsClient({ categorySlug, filters }) {
             ...filters,
           },
         });
-
         setProducts(res.data?.data || []);
-      } catch (err) {
+      } catch {
         setProducts([]);
       } finally {
         setLoading(false);
@@ -49,7 +42,11 @@ export default function ProductsClient({ categorySlug, filters }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard
+          key={product.id}
+          product={product}
+          detailsUrl={`/product/details?slug=${product.slug}`}
+        />
       ))}
     </div>
   );
