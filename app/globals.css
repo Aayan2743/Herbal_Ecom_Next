@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 14 75% 23%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom wine color theme */
+.wine-primary {
+  @apply bg-red-900 text-white;
+}
+
+.wine-secondary {
+  @apply bg-red-800 text-white;
+}
+
+.wine-accent {
+  @apply bg-rose-500 text-white;
+}
+
+.wine-light {
+  @apply bg-red-50;
+}
+
+.wine-text {
+  @apply text-red-900;
+}
+
+/* Search dropdown styles */
+.search-dropdown {
+  @apply absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-b-lg shadow-lg z-50 max-h-96 overflow-y-auto;
+}
+
+.search-item {
+  @apply px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0;
+}
+
+.search-item:hover {
+  @apply bg-red-50;
+}
+
+/* Enhanced sidebar styles */
+.category-section {
+  @apply border-b border-gray-200 last:border-b-0;
+}
+
+.category-header {
+  @apply flex items-center justify-between p-4 cursor-pointer hover:bg-red-50 transition-colors;
+}
+
+.category-items {
+  @apply bg-gray-50 border-t border-gray-200;
+}
+
+.category-item {
+  @apply block px-6 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-900 transition-colors;
+}
+
+/* Advertisement banner styles */
+.ad-banner {
+  @apply relative overflow-hidden rounded-lg shadow-lg;
+}
+
+.ad-content {
+  @apply absolute inset-0 bg-gradient-to-r from-red-900/90 to-red-800/90 flex items-center justify-between text-white p-8;
+}
+
+/* Checkout progress styles */
+.checkout-step {
+  @apply flex items-center space-x-2 text-sm font-medium;
+}
+
+.step-circle {
+  @apply w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold;
+}
+
+.step-active {
+  @apply bg-red-900 text-white;
+}
+
+.step-completed {
+  @apply bg-green-500 text-white;
+}
+
+.step-inactive {
+  @apply bg-gray-300 text-gray-600;
+}
+
+/* Wishlist styles */
+.wishlist-grid {
+  @apply grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4;
+}
+
+.wishlist-empty {
+  @apply text-center py-12 text-gray-500;
+}
+
+/* Payment method styles */
+.payment-method {
+  @apply border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-red-300 transition-all duration-300 hover:shadow-md;
+}
+
+.payment-method.selected {
+  @apply border-red-900 bg-red-50 shadow-md;
+}
+
+/* Enhanced checkout styles */
+.checkout-step-indicator {
+  @apply flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-all duration-300;
+}
+
+.step-active {
+  @apply bg-red-900 text-white shadow-lg;
+}
+
+.step-completed {
+  @apply bg-green-500 text-white;
+}
+
+.step-inactive {
+  @apply bg-gray-300 text-gray-600;
+}
+
+/* Address card styles */
+.address-card {
+  @apply border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-red-300 transition-all duration-300;
+}
+
+.address-card.selected {
+  @apply border-red-900 bg-red-50;
+}
+
+/* Form input enhancements */
+.form-input {
+  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent transition-all duration-300;
+}
+
+.form-input:hover {
+  @apply border-gray-400;
+}
+
+/* Button enhancements */
+.btn-primary {
+  @apply bg-red-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-800 transition-all duration-300 shadow-md hover:shadow-lg;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-all duration-300;
+}
+
+/* Supplier page styles */
+.benefit-card {
+  @apply bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100;
+}
+
+.stat-circle {
+  @apply w-12 h-12 rounded-full flex items-center justify-center;
+}
+
+.marquee-track {
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
