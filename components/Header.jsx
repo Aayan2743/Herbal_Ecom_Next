@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Search,
-  User,
-  ShoppingCart,
-  ChevronDown,
-  Heart,
-} from "lucide-react";
+import { Search, User, ShoppingCart, ChevronDown, Heart } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/lib/api";
 
@@ -39,12 +33,17 @@ export default function Header() {
   useEffect(() => {
     const loadCategories = async () => {
       try {
-        const res = await api.get("/dashboard/pos/categories");
-        setCategories(
-          (res.data?.data ?? []).filter(
-            (c) => typeof c.id === "number"
-          )
-        );
+        const res = await api.get("/ecom/menu");
+
+        console.log("Menu API", res.data);
+
+        const normalized = (res.data ?? []).map((c, index) => ({
+          id: index + 1, // fake id for React keys
+          name: c.label, // UI expects name
+          slug: c.key, // used in URL
+        }));
+
+        setCategories(normalized);
       } catch (err) {
         console.error("Category load failed", err);
       }
@@ -58,12 +57,15 @@ export default function Header() {
   useEffect(() => {
     const loadLogo = async () => {
       try {
-        const res = await api.get("/dashboard/logo-settings-open");
-        if (res.data?.status && res.data?.data?.logo) {
-          setLogo(res.data.data.logo);
+        const res = await api.get("/ecom/app-logo-settings");
+
+        console.log("Logo API", res.data);
+
+        if (res.data?.success && res.data?.data?.app_logo) {
+          setLogo(res.data.data.app_logo_url);
         }
       } catch (err) {
-        console.error("Logo load failed", err);
+        console.error("Logo load failed", err.response?.data || err.message);
       }
     };
 
@@ -111,9 +113,7 @@ export default function Header() {
                 <p className="text-xl font-bold text-[#8B1D3D]">
                   Sridevi Herbal & Co
                 </p>
-                <p className="text-xs text-gray-500">
-                  Pure Herbal Living
-                </p>
+                <p className="text-xs text-gray-500">Pure Herbal Living</p>
               </div>
             </button>
 
@@ -157,12 +157,8 @@ export default function Header() {
                 {showProfileMenu && (
                   <div className="absolute right-0 mt-2 w-52 bg-white border rounded shadow-lg z-50">
                     <div className="px-4 py-3 border-b">
-                      <p className="text-xs text-gray-500">
-                        Signed in as
-                      </p>
-                      <p className="font-semibold">
-                        {user?.phone}
-                      </p>
+                      <p className="text-xs text-gray-500">Signed in as</p>
+                      <p className="font-semibold">{user?.phone}</p>
                     </div>
 
                     <button
@@ -187,10 +183,7 @@ export default function Header() {
               </div>
 
               {/* CART */}
-              <button
-                onClick={() => setShowCart(true)}
-                className="relative"
-              >
+              <button onClick={() => setShowCart(true)} className="relative">
                 <ShoppingCart className="w-5 h-5 text-gray-600" />
                 {getTotalItems() > 0 && (
                   <span className="absolute -top-2 -right-2 bg-[#8B1D3D] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -229,14 +222,10 @@ export default function Header() {
             </div>
 
             <div className="flex gap-6 text-sm">
-              <button
-                onClick={() => router.push("/bath-powder-story")}
-              >
+              <button onClick={() => router.push("/bath-powder-story")}>
                 Bath Powder Story
               </button>
-              <button
-                onClick={() => router.push("/success-story")}
-              >
+              <button onClick={() => router.push("/success-story")}>
                 Success Story
               </button>
             </div>
@@ -264,14 +253,8 @@ export default function Header() {
         </div>
       )}
 
-      <Cart
-        isOpen={showCart}
-        onClose={() => setShowCart(false)}
-      />
-      <LoginModal
-        isOpen={showLogin}
-        onClose={() => setShowLogin(false)}
-      />
+      <Cart isOpen={showCart} onClose={() => setShowCart(false)} />
+      <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
     </>
   );
 }

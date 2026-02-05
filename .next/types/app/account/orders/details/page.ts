@@ -1,4 +1,4 @@
-// File: D:\HERBAL\Herbals-next\Herbals\app\account\orders\details\page.jsx
+// File: D:\HERBAL\Herbals-next\Herbals-laravel-ecom\app\account\orders\details\page.jsx
 import * as entry from '../../../../../../app/account/orders/details/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -37,7 +37,7 @@ export default function OrderDetailsPage() {
 
   const fetchOrder = async () => {
     try {
-      const res = await api.get(`/cart/get-my-orders/${orderId}`);
+      const res = await api.get(`/user-dashboard/get-my-orders/${orderId}`);
       setOrder(res.data.data);
     } catch (err) {
       console.error(err);

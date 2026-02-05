@@ -16,7 +16,7 @@ export const WishlistProvider = ({ children }) => {
   const fetchWishlist = async () => {
     try {
       setLoading(true);
-      const res = await api.get("/cart/get-wishlist");
+      const res = await api.get("/user-dashboard/get-wishlist");
       setWishlist(res.data?.data || []);
     } catch (err) {
       console.error("Failed to load wishlist");
@@ -38,7 +38,7 @@ export const WishlistProvider = ({ children }) => {
   /* ================= TOGGLE (OPTIMISTIC) ================= */
   const toggleWishlist = async (product) => {
     try {
-      const res = await api.post("/cart/wishlist-toggle", {
+      const res = await api.post("/user-dashboard/wishlist-toggle", {
         product_id: product.id,
       });
 

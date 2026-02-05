@@ -74,15 +74,15 @@ export default function LoginModal({ isOpen, onClose }) {
   const handlePasswordLogin = async (e) => {
     e.preventDefault();
     setError("");
-    if (!password || phone.length !== 10)
-      return setError("Phone & password required");
 
     setLoading(true);
+
     try {
       const res = await api.post("/auth/user-login", {
-        username: `91${phone}`,
+        login: phone, // ✅ send only 10 digits
         password,
       });
+
       login(res.data.token, res.data.user);
       handleClose();
     } catch (err) {
@@ -95,21 +95,25 @@ export default function LoginModal({ isOpen, onClose }) {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
-    if (!name || !email || password.length < 6 || phone.length !== 10)
+
+    if (!name || !email || password.length < 6 || phone.length !== 10) {
       return setError("Fill all fields correctly");
+    }
 
     setLoading(true);
+
     try {
-      const res = await api.post("/auth/register", {
+      const res = await api.post("/auth/user-register", {
         name,
         email,
-        phone: `91${phone}`,
+        phone, // ✅ send 10 digits only
         password,
       });
+
       login(res.data.token, res.data.user);
       handleClose();
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      setError(err.response?.data?.errors || "Registration failed");
     } finally {
       setLoading(false);
     }

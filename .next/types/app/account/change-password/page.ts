@@ -1,4 +1,4 @@
-// File: D:\HERBAL\Herbals-next\Herbals\app\account\change-password\page.jsx
+// File: D:\HERBAL\Herbals-next\Herbals-laravel-ecom\app\account\change-password\page.jsx
 import * as entry from '../../../../../app/account/change-password/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

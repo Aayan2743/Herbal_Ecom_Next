@@ -1,4 +1,4 @@
-// File: D:\HERBAL\Herbals-next\Herbals\app\account\layout.jsx
+// File: D:\HERBAL\Herbals-next\Herbals-laravel-ecom\app\account\layout.jsx
 import * as entry from '../../../../app/account/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

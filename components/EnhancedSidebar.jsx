@@ -4,10 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 
-export default function EnhancedSidebar({
-  selectedCategory,
-  onFiltersChange,
-}) {
+export default function EnhancedSidebar({ selectedCategory, onFiltersChange }) {
   const router = useRouter();
 
   const [categories, setCategories] = useState([]);
@@ -26,16 +23,18 @@ export default function EnhancedSidebar({
   useEffect(() => {
     const load = async () => {
       const [catRes, brandRes] = await Promise.all([
-        api.get("/dashboard/pos/categories"),
-        api.get("/dashboard/pos/brands"),
+        api.get("/ecom/menu"), // ✅ correct API
+        api.get("/ecom/list-brand"),
       ]);
 
-      setCategories(
-        (catRes.data?.data ?? []).filter(
-          (c) => typeof c.id === "number"
-        )
-      );
+      // ✅ NORMALIZE CATEGORY RESPONSE
+      const normalizedCategories = (catRes.data ?? []).map((c, index) => ({
+        id: index + 1, // fake id (UI only)
+        name: c.label, // label → name
+        slug: c.key, // key → slug
+      }));
 
+      setCategories(normalizedCategories);
       setBrands(brandRes.data?.data ?? []);
     };
 
@@ -46,9 +45,7 @@ export default function EnhancedSidebar({
 
   const toggleBrand = (id) => {
     setSelectedBrands((prev) =>
-      prev.includes(id)
-        ? prev.filter((x) => x !== id)
-        : [...prev, id]
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   };
 
@@ -83,9 +80,7 @@ export default function EnhancedSidebar({
         {categories.map((c) => (
           <button
             key={c.id}
-            onClick={() =>
-              router.push(`/products?category=${c.slug}`)
-            }
+            onClick={() => router.push(`/products?category=${c.slug}`)}
             className={`block w-full text-left py-1 ${
               selectedCategory === c.slug
                 ? "font-bold text-red-900"
@@ -137,26 +132,28 @@ export default function EnhancedSidebar({
       </div>
 
       {/* ================= BRAND ================= */}
-      <div>
-        <h3 className="font-semibold mb-3">Brands</h3>
+      {brands.length > 0 && (
+        <div>
+          <h3 className="font-semibold mb-3">Brands</h3>
 
-        <div className="space-y-2 max-h-48 overflow-y-auto">
-          {brands.map((b) => (
-            <label
-              key={b.id}
-              className="flex items-center gap-2 text-sm cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                checked={selectedBrands.includes(b.id)}
-                onChange={() => toggleBrand(b.id)}
-                className="accent-red-900"
-              />
-              {b.name}
-            </label>
-          ))}
+          <div className="space-y-2 max-h-48 overflow-y-auto">
+            {brands.map((b) => (
+              <label
+                key={b.id}
+                className="flex items-center gap-2 text-sm cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedBrands.includes(b.id)}
+                  onChange={() => toggleBrand(b.id)}
+                  className="accent-red-900"
+                />
+                {b.name}
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ================= SORT ================= */}
       <div>

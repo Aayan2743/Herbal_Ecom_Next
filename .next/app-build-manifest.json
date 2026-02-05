@@ -16,6 +16,21 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
+    ],
+    "/products/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/products/page.js"
+    ],
+    "/product/details/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/product/details/page.js"
+    ],
     "/account/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -26,45 +41,35 @@
       "static/chunks/main-app.js",
       "static/chunks/app/account/layout.js"
     ],
-    "/account/wishlist/page": [
+    "/account/profile/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/account/wishlist/page.js"
-    ],
-    "/product/details/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/product/details/page.js"
-    ],
-    "/account/change-password/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/account/change-password/page.js"
+      "static/chunks/app/account/profile/page.js"
     ],
     "/account/orders/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/account/orders/page.js"
     ],
-    "/_not-found/page": [
+    "/account/wishlist/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/chunks/app/account/wishlist/page.js"
+    ],
+    "/account/orders/details/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/account/orders/details/page.js"
     ],
     "/account/affiliate/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/account/affiliate/page.js"
     ],
-    "/account/profile/page": [
+    "/account/change-password/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/account/profile/page.js"
-    ],
-    "/account/orders/details/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/account/orders/details/page.js"
+      "static/chunks/app/account/change-password/page.js"
     ]
   }
 }

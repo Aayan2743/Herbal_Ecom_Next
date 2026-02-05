@@ -46,10 +46,10 @@ const LoadingAnimation = ({ onComplete }) => {
   useEffect(() => {
     const fetchLogo = async () => {
       try {
-        const res = await api.get("/dashboard/logo-settings-open");
+        const res = await api.get("/ecom/app-logo-settings");
         const result = res.data;
 
-        if (result.status && result.data?.logo) {
+        if (result.status && result.data?.app_logo_url) {
           setLogo(result.data.logo);
         }
       } catch (error) {

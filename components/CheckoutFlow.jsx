@@ -45,7 +45,7 @@ const CheckoutFlow = ({ isOpen, onClose }) => {
   const fetchAddresses = async () => {
     try {
       setLoadingAddresses(true);
-      const res = await api.get("/cart/get-address");
+      const res = await api.get("/user-dashboard/cart/get-address");
       const list = res.data.data || [];
       setAddresses(list);
 
@@ -76,7 +76,7 @@ const CheckoutFlow = ({ isOpen, onClose }) => {
       setCouponLoading(true);
       setCouponError("");
 
-      const res = await api.post("/cart/apply-coupon", {
+      const res = await api.post("/user-dashboard/cart/apply-coupon", {
         code: couponCode,
         amount: getTotalPrice(),
       });
@@ -102,6 +102,7 @@ const CheckoutFlow = ({ isOpen, onClose }) => {
   };
 
   const handleRazorpayPayment = async () => {
+    console.log("final amount", finalAmount);
     const resScript = await loadRazorpayScript();
     if (!resScript) {
       alert("Razorpay SDK failed");
@@ -109,77 +110,93 @@ const CheckoutFlow = ({ isOpen, onClose }) => {
     }
 
     // 1️⃣ Create order
-    const orderRes = await api.post("/cart/create-order", {
+    const orderRes = await api.post("/user-dashboard/cart/create-order", {
       // amount: getTotalPrice(),
       amount: finalAmount,
     });
 
     const { order } = orderRes.data;
 
+    console.log("ir", orderRes);
+
     const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      amount: order.amount,
+      key: "rzp_test_RywTw9KUnaPKxd",
+      amount: order.amount, // ✅ FROM BACKEND
       currency: "INR",
       name: "Sridevi Herbal & Co",
       description: "Order Payment",
-      order_id: order.id,
-
-      // handler: async function (response) {
-      //   // 2️⃣ Verify payment
-      //   const verifyRes = await api.post("/cart/verify-payment", response);
-
-      //   if (verifyRes.data.success) {
-      //     alert("Payment successful 🎉");
-      //     clearCart();
-      //     onClose();
-      //   } else {
-      //     alert("Payment verification failed");
-      //   }
-      // },
+      order_id: order.id, // ✅ MUST EXIST
 
       handler: async function (response) {
+        console.log("Razorpay Response:", response);
+
         try {
-          // 1️⃣ Verify payment
-          const verifyRes = await api.post("/cart/verify-payment", response);
+          // 1️⃣ VERIFY PAYMENT
+          const verifyRes = await api.post(
+            "/user-dashboard/cart/verify-payment",
+            {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            },
+          );
 
           if (!verifyRes.data.success) {
             alert("Payment verification failed");
             return;
           }
 
-          // 2️⃣ SAVE ORDER IN DB
-
-          const orderRes = await api.post("/cart/save-order", {
+          // 2️⃣ BUILD ORDER PAYLOAD
+          const orderPayload = {
+            user_id: user?.id,
             address_id: selectedAddress,
+
+            payment: {
+              method: "razorpay",
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              amount: finalAmount,
+            },
+
+            price_details: {
+              subtotal: getTotalPrice(),
+              discount: discount,
+              coupon_code: couponCode || null,
+              total_amount: finalAmount,
+            },
+
             items: cart.map((item) => ({
               product_id: item.id,
               variation_id: item.variationId,
               quantity: item.quantity,
               price: item.price,
+              total: item.price * item.quantity,
             })),
-            coupon_code: couponCode || null,
-            discount,
-            subtotal: getTotalPrice(),
-            total_amount: finalAmount,
-            payment_method: "razorpay",
-            payment_id: response.razorpay_payment_id,
-          });
+          };
 
-          // 3️⃣ CONSOLE ORDER ✅
-          console.log("ORDER CREATED:", orderRes.data);
+          // 🔍 DEBUG (as you requested)
+          console.log("🧾 ORDER DATA TO SAVE:", orderPayload);
 
-          alert("Payment successful 🎉");
+          // 3️⃣ SAVE ORDER IN DATABASE
+          const saveRes = await api.post(
+            "/user-dashboard/orders",
+            orderPayload,
+          );
+
+          if (!saveRes.data.success) {
+            alert("Order save failed");
+            return;
+          }
+
+          console.log("✅ ORDER SAVED:", saveRes.data);
 
           // 4️⃣ CLEANUP
+          alert("Payment successful 🎉");
           clearCart();
-          setCouponCode("");
-          setDiscount(0);
-          setFinalAmount(getTotalPrice());
-
           onClose();
         } catch (err) {
-          console.error("ORDER CREATION FAILED:", err);
-          alert("Order creation failed");
+          console.error("❌ ORDER ERROR:", err.response?.data || err);
+          alert("Order processing failed");
         }
       },
 
@@ -197,6 +214,24 @@ const CheckoutFlow = ({ isOpen, onClose }) => {
     rzp.open();
   };
 
+  <button
+    onClick={() => {
+      if (!selectedPaymentMethod) {
+        alert("Select payment method");
+        return;
+      }
+
+      if (selectedPaymentMethod === "cod") {
+        handleCODOrder();
+      } else {
+        handleRazorpayPayment();
+      }
+    }}
+    className="bg-green-600 text-white px-6 py-2 rounded"
+  >
+    Place Order
+  </button>;
+
   /* ================= AUTO OPEN ADDRESS FORM ================= */
 
   useEffect(() => {
@@ -212,7 +247,7 @@ const CheckoutFlow = ({ isOpen, onClose }) => {
       try {
         setLoadingAddresses(true);
 
-        const res = await api.get("/cart/get-address");
+        const res = await api.get("user-dashboard/cart/get-address");
         const list = res.data.data || [];
 
         setAddresses(list);
@@ -270,7 +305,10 @@ const CheckoutFlow = ({ isOpen, onClose }) => {
     }
 
     try {
-      const res = await api.post("/cart/add-address", addressForm);
+      const res = await api.post(
+        "user-dashboard/cart/add-address",
+        addressForm,
+      );
       const newAddress = res.data.data;
 
       setAddresses((prev) => [newAddress, ...prev]);

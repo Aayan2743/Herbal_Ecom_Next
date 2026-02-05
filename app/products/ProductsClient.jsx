@@ -12,14 +12,17 @@ export default function ProductsClient({ categorySlug, filters }) {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const res = await api.get("dashboard/pos/products-all/", {
+        const res = await api.get("/ecom/products-main", {
           params: {
             ...(categorySlug ? { category: categorySlug } : {}),
-            ...filters,
+            ...(filters || {}),
           },
         });
-        setProducts(res.data?.data || []);
-      } catch {
+
+        // 👈 paginated response
+        setProducts(res.data?.data?.data || []);
+      } catch (err) {
+        console.error(err);
         setProducts([]);
       } finally {
         setLoading(false);
@@ -42,11 +45,7 @@ export default function ProductsClient({ categorySlug, filters }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
       {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          detailsUrl={`/product/details?slug=${product.slug}`}
-        />
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   );

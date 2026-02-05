@@ -56,7 +56,7 @@ export default function ProfilePage() {
         formData.append("profile_image", avatarFile);
       }
 
-      const res = await api.post("/auth/profile/update", formData, {
+      const res = await api.post("/user-dashboard/update-profile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
