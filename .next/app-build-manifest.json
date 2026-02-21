@@ -21,11 +21,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/_not-found/page.js"
     ],
-    "/products/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/products/page.js"
-    ],
     "/product/details/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -56,20 +51,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/account/wishlist/page.js"
     ],
-    "/account/orders/details/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/account/orders/details/page.js"
-    ],
     "/account/affiliate/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/account/affiliate/page.js"
-    ],
-    "/account/change-password/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/account/change-password/page.js"
     ]
   }
 }

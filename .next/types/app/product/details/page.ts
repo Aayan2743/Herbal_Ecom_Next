@@ -1,4 +1,4 @@
-// File: D:\HERBAL\Herbals-next\Herbals-laravel-ecom\app\product\details\page.jsx
+// File: D:\Heights Project\HERBAL\Asif Laravel\Herbals-laravel-ecom\app\product\details\page.jsx
 import * as entry from '../../../../../app/product/details/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
